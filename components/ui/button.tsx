@@ -11,41 +11,41 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     let variantStyles = "";
     switch (variant) {
       case "default":
-        variantStyles = "bg-primary text-white hover:bg-primary-hover shadow-sm";
+        variantStyles = "bg-yellow-400 text-slate-900 hover:bg-yellow-500 shadow-md shadow-yellow-400/20 border border-yellow-500/20 font-bold hover:-translate-y-0.5 transition-transform";
         break;
       case "outline":
-        variantStyles = "border border-primary text-primary bg-transparent hover:bg-muted";
+        variantStyles = "border-2 border-slate-200 text-slate-700 bg-transparent hover:bg-slate-50 hover:border-yellow-400 font-bold";
         break;
       case "secondary":
-        variantStyles = "bg-secondary text-white hover:bg-secondary-hover shadow-sm";
+        variantStyles = "bg-slate-900 text-white hover:bg-slate-800 shadow-md font-bold";
         break;
       case "ghost":
-        variantStyles = "hover:bg-muted hover:text-foreground";
+        variantStyles = "hover:bg-yellow-50 hover:text-slate-900 text-slate-600 font-bold transition-colors";
         break;
       case "link":
-        variantStyles = "text-primary underline-offset-4 hover:underline";
+        variantStyles = "text-yellow-600 underline-offset-4 hover:underline font-bold";
         break;
     }
 
     let sizeStyles = "";
     switch (size) {
       case "default":
-        sizeStyles = "h-10 px-4 py-2";
+        sizeStyles = "h-11 px-5 py-2";
         break;
       case "sm":
-        sizeStyles = "h-9 rounded-full px-4 text-sm";
+        sizeStyles = "h-9 px-4 text-sm";
         break;
       case "lg":
-        sizeStyles = "h-11 rounded-full px-8";
+        sizeStyles = "h-14 px-8 text-lg";
         break;
       case "icon":
-        sizeStyles = "h-10 w-10 rounded-full";
+        sizeStyles = "h-10 w-10";
         break;
     }
 
     return (
       <button
-        className={`inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variantStyles} ${sizeStyles} ${className}`}
+        className={`inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variantStyles} ${sizeStyles} ${className}`}
         ref={ref}
         {...props}
       />

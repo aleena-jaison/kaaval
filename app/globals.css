@@ -21,12 +21,7 @@
   --foreground: #292524;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1c1917; /* stone-900 */
-    --foreground: #fafaf9; /* stone-50 */
-  }
-}
+/* Dark mode disabled for consistent yellow/white branding */
 
 body {
   background: var(--background);
