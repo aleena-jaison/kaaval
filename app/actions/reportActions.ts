@@ -59,3 +59,20 @@ export async function getPendingReportsCount() {
 
   return count || 0
 }
+
+export async function updateReportStatus(id: string, status: string) {
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('public_reports')
+    .update({ status })
+    .eq('id', id)
+
+  if (error) {
+    console.error('Error updating report status:', error)
+    return { success: false, error: error.message }
+  }
+
+  revalidatePath('/admin/reports')
+  revalidatePath('/admin')
+  return { success: true }
+}
