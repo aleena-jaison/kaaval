@@ -2,8 +2,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Plus, BookOpen, AlertCircle } from "lucide-react";
+import { getLicensedPets } from "@/app/actions/licensedActions";
 
-export default function LicensedDogsRegistry() {
+export default async function LicensedDogsRegistry() {
+  const licensedPets = await getLicensedPets();
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -23,11 +26,11 @@ export default function LicensedDogsRegistry() {
         </div>
         <select className="flex h-10 w-full md:w-[200px] rounded-md border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
           <option value="">All Wards</option>
-          <option value="1">Ward 1</option>
-          <option value="2">Ward 2</option>
-          <option value="3">Ward 3</option>
-          <option value="4">Ward 4</option>
-          <option value="5">Ward 5</option>
+          <option value="Ward 1">Ward 1</option>
+          <option value="Ward 2">Ward 2</option>
+          <option value="Ward 3">Ward 3</option>
+          <option value="Ward 4">Ward 4</option>
+          <option value="Ward 5">Ward 5</option>
         </select>
       </div>
 
@@ -50,17 +53,12 @@ export default function LicensedDogsRegistry() {
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { tag: "TAG-1001", passport: "PPT-890", name: "Max", breed: "Labrador", owner: "Ravi Kumar", phone: "+91 9876543210", ward: "Ward 3", status: "Up to date", statusColor: "border-border text-foreground" },
-                  { tag: "TAG-1002", passport: "PPT-891", name: "Bella", breed: "Indie", owner: "Priya Singh", phone: "+91 9876543211", ward: "Ward 1", status: "Due soon", statusColor: "border-border text-foreground" },
-                  { tag: "TAG-1003", passport: "PPT-892", name: "Charlie", breed: "Golden Retriever", owner: "Ajit Menon", phone: "+91 9876543212", ward: "Ward 5", status: "Overdue", statusColor: "border-border text-foreground" },
-                  { tag: "TAG-1004", passport: "PPT-893", name: "Lucy", breed: "German Shepherd", owner: "Sneha V", phone: "+91 9876543213", ward: "Ward 2", status: "Up to date", statusColor: "border-border text-foreground" },
-                ].map((dog, i) => (
-                  <tr key={i} className="border-b border-border hover:bg-muted/30 transition-colors">
+                {licensedPets.map((dog) => (
+                  <tr key={dog.id} className="border-b border-border hover:bg-muted/30 transition-colors">
                     <td className="px-6 py-4">
-                      <div className="font-medium text-primary">{dog.tag}</div>
+                      <div className="font-medium text-primary">{dog.tag_id}</div>
                       <div className="text-xs text-muted-foreground flex items-center mt-1">
-                        <BookOpen className="h-3 w-3 mr-1" /> {dog.passport}
+                        <BookOpen className="h-3 w-3 mr-1" /> {dog.passport_id}
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -68,8 +66,8 @@ export default function LicensedDogsRegistry() {
                       <div className="text-xs text-muted-foreground">{dog.breed}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-medium">{dog.owner}</div>
-                      <div className="text-xs text-muted-foreground">{dog.phone}</div>
+                      <div className="font-medium">{dog.owner_name}</div>
+                      <div className="text-xs text-muted-foreground">{dog.owner_phone}</div>
                     </td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
@@ -77,9 +75,9 @@ export default function LicensedDogsRegistry() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border ${dog.statusColor}`}>
-                        {dog.status === "Overdue" && <AlertCircle className="h-3 w-3 mr-1" />}
-                        {dog.status}
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border border-border text-foreground`}>
+                        {dog.vaccination_status === "Overdue" && <AlertCircle className="h-3 w-3 mr-1" />}
+                        {dog.vaccination_status}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -87,6 +85,13 @@ export default function LicensedDogsRegistry() {
                     </td>
                   </tr>
                 ))}
+                {licensedPets.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
+                      No licensed pets found. Register a pet to see them here.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
